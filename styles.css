@@ -1053,7 +1053,7 @@ body.is-mobile .hero__blob {
 /* --- BENTO --- */
 body.is-mobile .bento {
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 20px;
 }
 body.is-mobile .bento__item,
 body.is-mobile .bento__item--big,
@@ -1064,11 +1064,9 @@ body.is-mobile .bento__item--accent {
 body.is-mobile .bento__item {
   padding: 28px 20px 20px;
 }
-body.is-mobile .bento__item--big {
-  padding: 32px 20px 24px;
-}
+
 body.is-mobile .bento__num {
-  font-size: clamp(28px, 8vw, 44px);
+  font-size: clamp(60px, 16vw, 96px);
 }
 body.is-mobile .bento__title {
   font-size: 20px;
@@ -1215,10 +1213,12 @@ body.is-mobile .form select {
 
 /* --- FOOTER --- */
 body.is-mobile .footer__inner {
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
-  text-align: center;
+  text-align: left;
+  flex-wrap: wrap;
 }
 
 /* --- MODAL --- */

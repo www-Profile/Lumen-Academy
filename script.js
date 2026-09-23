@@ -296,29 +296,29 @@ function applyMobileVersion() {
     `;
   }
 
-  // 2.3 Короткие описания в остальных bento-карточках
-  const shortDescs = {
-    'accent': 'Отдельный предмет: исследование, текст, защита.',
-    'default': 'Живые уроки 1×1, не записи. Расписание под ученика.'
-  };
+// 2.3 Короткие описания в bento-карточках
+document.querySelectorAll('.bento__item').forEach(item => {
+  if (item.classList.contains('bento__item--big')) return;
+  if (item.classList.contains('bento__photo')) return;
 
-  document.querySelectorAll('.bento__item').forEach(item => {
-    if (item.classList.contains('bento__item--big')) return;
-    if (item.classList.contains('bento__photo')) return;
+  const desc = item.querySelector('.bento__desc');
+  if (!desc) return;
 
-    const desc = item.querySelector('.bento__desc');
-    if (!desc) return;
+  if (item.classList.contains('bento__item--accent')) {
+    // «Бонус» — чёрная карточка
+    desc.textContent = 'Учим собирать информацию, писать работу и защищать её публично.';
+  } else {
+    const label = item.querySelector('.bento__label');
+    const key = label ? label.textContent.trim() : '';
 
-    if (item.classList.contains('bento__item--accent')) {
-      desc.textContent = shortDescs.accent;
-    } else {
-      // оставляем как есть, если это карточка «Формат»/«Старт»
-      // (там уже есть описания), но сокращаем если длинные
-      if (desc.textContent.length > 100) {
-        desc.textContent = shortDescs.default;
-      }
-    }
-  });
+    const map = {
+      'Формат': 'Живые уроки один на один, не записи. Расписание под ученика.',
+      'Старт':  'Начать можно в любой день. Программа подстраивается под уровень.'
+    };
+
+    if (map[key]) desc.textContent = map[key];
+  }
+});
 
   // 2.4 Удаляем фото-блок в bento
   const bentoPhoto = document.querySelector('.bento__photo');
@@ -332,12 +332,31 @@ function applyMobileVersion() {
   const faqPhoto = document.querySelector('.faq__photo');
   if (faqPhoto) faqPhoto.remove();
 
+  // ---------- CTA — короткий текст для телефона ----------
+const ctaLead = document.querySelector('.cta__lead');
+if (ctaLead) {
+  ctaLead.textContent = 'Оставьте заявку  наставник свяжется с вами в ближайшее время. Обсудим цель, уровень и подберём программу.';
+}
+
   // ---------- 5. FOOTER — убираем ссылки ----------
   const footerLinks = document.querySelector('.footer__links');
   if (footerLinks) footerLinks.remove();
 
   // ---------- 6. Модалка предмета — сокращаем ----------
   // (размер регулируется в CSS, тут только текст если нужно)
+
+  // ---------- 7. PROJECT — кнопка после 4 пунктов, на всю ширину ----------
+const projectText = document.querySelector('.project__text');
+const projectSteps = document.querySelector('.project__steps');
+const projectBtn = projectText ? projectText.querySelector('.btn--project') : null;
+
+if (projectText && projectSteps && projectBtn) {
+  // вынимаем кнопку из левой колонки и вставляем после списка
+  projectSteps.insertAdjacentElement('afterend', projectBtn);
+
+  // растягиваем на всю ширину
+  projectBtn.classList.add('btn--project-full');
+}
 }
 
 // запускаем при загрузке
