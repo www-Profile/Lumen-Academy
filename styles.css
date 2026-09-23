@@ -970,115 +970,6 @@ z-index: 1;
   justify-content: center;
 }
 
-/* ===== PRICE TOTAL ===== */
-.price-total {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px 32px;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  padding: 24px 32px;
-  margin-top: 20px;
-  background: var(--white);
-  border: var(--border);
-  border-radius: var(--r);
-  transition: box-shadow 0.3s;
-}
-
-.price-total:hover {
-  box-shadow: var(--shadow);
-}
-
-.price-total__label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--steel);
-}
-
-.price-total__value {
-  font-family: 'Unbounded', sans-serif;
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.price-total__value strong {
-  color: var(--tomato);
-  font-weight: 800;
-}
-
-.price-total__old {
-  font-size: 18px;
-  color: #999;
-  text-decoration: line-through;
-  font-weight: 500;
-}
-
-.price-total__discount {
-  display: inline-block;
-  padding: 4px 10px;
-  background: rgba(255,99,71,0.12);
-  color: var(--tomato);
-  font-family: 'Manrope', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  border-radius: 999px;
-}
-
-.price-total__hint {
-  margin-left: auto;
-  font-size: 14px;
-  color: #666;
-}
-
-.price-total__hint.is-active {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-/* ===== PRICE DISCOUNT RULES ===== */
-.price-rules {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.price-rules__item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 30px;
-  background: var(--white);
-  border: var(--border);
-  border-radius: 999px;
-  font-size: 13px;
-  color: #555;
-}
-
-.price-rules__item:hover {
-  box-shadow: var(--shadow);
-}
-
-.price-rules__item i {
-  color: var(--tomato);
-  font-size: 12px;
-}
-
-.price-rules__item strong {
-  color: var(--ink);
-  font-weight: 700;
-}
-
 /* ===== FORM SUBJECTS ===== */
 .form__subjects {
   display: flex;
@@ -1109,4 +1000,277 @@ z-index: 1;
   font-size: 13px;
   font-weight: 600;
   font-family: 'Manrope', sans-serif;
+}
+
+/* ============================================================
+   МОБИЛЬНАЯ ВЕРСИЯ — применяется только когда на body есть .is-mobile
+   ============================================================ */
+body.is-mobile .header__inner {
+  height: 60px;
+  gap: 16px;
+}
+body.is-mobile .nav {
+  display: none;
+}
+body.is-mobile .burger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+body.is-mobile .nav.is-open {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray);
+  padding: 20px;
+  gap: 16px;
+  z-index: 40;
+}
+
+/* --- HERO --- */
+body.is-mobile .hero {
+  padding: 32px 0 40px;
+}
+body.is-mobile .hero__title {
+  font-size: clamp(28px, 9vw, 48px);
+  margin-bottom: 28px;
+}
+body.is-mobile .hero::before,
+body.is-mobile .hero::after,
+body.is-mobile .hero__blob {
+  width: 400px;
+  height: 400px;
+}
+
+/* --- BENTO --- */
+body.is-mobile .bento {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+body.is-mobile .bento__item,
+body.is-mobile .bento__item--big,
+body.is-mobile .bento__item--accent {
+  grid-column: span 1;
+  grid-row: auto;
+}
+body.is-mobile .bento__item {
+  padding: 28px 20px 20px;
+}
+body.is-mobile .bento__item--big {
+  padding: 32px 20px 24px;
+}
+body.is-mobile .bento__num {
+  font-size: clamp(28px, 8vw, 44px);
+}
+body.is-mobile .bento__title {
+  font-size: 20px;
+}
+body.is-mobile .bento__lead,
+body.is-mobile .bento__desc {
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* --- SECTION --- */
+body.is-mobile .section {
+  padding: 56px 0;
+}
+body.is-mobile .section__head {
+  margin-bottom: 28px;
+}
+body.is-mobile .section__title {
+  font-size: clamp(26px, 8vw, 40px);
+}
+
+/* --- PRICE RULES --- */
+body.is-mobile .price-rules {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+body.is-mobile .price-rules__item {
+  padding: 8px 16px;
+  font-size: 12px;
+}
+
+/* --- SUBJECTS — 1 колонка --- */
+body.is-mobile .subjects {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+body.is-mobile .subject {
+  padding: 20px 18px;
+}
+body.is-mobile .subject h3 {
+  font-size: 16px;
+}
+body.is-mobile .subject__icon {
+  width: 42px;
+  height: 42px;
+  font-size: 18px;
+}
+
+/* --- PRICE TOTAL --- */
+body.is-mobile .price-total {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px;
+}
+body.is-mobile .price-total__value {
+  font-size: 22px;
+}
+body.is-mobile .price-total__hint {
+  margin-left: 0;
+  font-size: 13px;
+}
+
+/* --- PROJECT --- */
+body.is-mobile .project {
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+body.is-mobile .project__lead {
+  font-size: 15px;
+}
+body.is-mobile .project__steps {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+body.is-mobile .project__steps li {
+  padding: 20px;
+}
+body.is-mobile .project__steps h4 {
+  font-size: 17px;
+}
+body.is-mobile .project__steps p {
+  font-size: 13px;
+}
+body.is-mobile .btn--project {
+  padding: 14px 28px;
+  font-size: 14px;
+}
+
+/* --- TEACHERS — 1 колонка --- */
+body.is-mobile .teachers {
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+body.is-mobile .teacher h3 {
+  font-size: 16px;
+}
+body.is-mobile .teacher p {
+  font-size: 13px;
+}
+
+/* --- FAQ --- */
+body.is-mobile .faq__wrap {
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+body.is-mobile .faq__left {
+  position: static;
+}
+body.is-mobile .faq summary {
+  padding: 18px;
+  font-size: 15px;
+}
+body.is-mobile .faq p {
+  padding: 0 18px 18px;
+  font-size: 14px;
+}
+
+/* --- CTA --- */
+body.is-mobile .cta__inner {
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+body.is-mobile .cta__lead {
+  font-size: 15px;
+}
+
+/* --- FORM --- */
+body.is-mobile .form {
+  padding: 22px 18px;
+}
+body.is-mobile .form__title {
+  font-size: 18px;
+}
+body.is-mobile .form__subtitle {
+  font-size: 13px;
+}
+body.is-mobile .form input,
+body.is-mobile .form select {
+  padding: 12px 14px;
+  font-size: 15px;
+}
+
+/* --- FOOTER --- */
+body.is-mobile .footer__inner {
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+/* --- MODAL --- */
+body.is-mobile .modal {
+  padding: 16px;
+}
+body.is-mobile .modal__window {
+  padding: 36px 20px 24px;
+  border-radius: 20px;
+  max-width: 100%;
+}
+body.is-mobile .modal__close {
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+}
+body.is-mobile .modal__icon {
+  width: 56px;
+  height: 56px;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+body.is-mobile .modal__title {
+  font-size: 18px;
+}
+body.is-mobile .modal__text {
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+body.is-mobile .modal__price {
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+body.is-mobile .modal__price-value {
+  font-size: 20px;
+}
+body.is-mobile .modal__price-unit {
+  font-size: 11px;
+}
+body.is-mobile .modal__btn {
+  padding: 12px 24px;
+  font-size: 13px;
+}
+
+/* --- ЯКОРЯ --- */
+body.is-mobile #subjects,
+body.is-mobile #project,
+body.is-mobile #teachers,
+body.is-mobile #faq,
+body.is-mobile #contact {
+  scroll-margin-top: 80px;
 }

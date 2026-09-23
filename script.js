@@ -140,56 +140,9 @@ const subjectModalText = document.getElementById('subjectModalText');
 const subjectModalIcon = document.getElementById('subjectModalIcon');
 const subjectModalBtn = document.getElementById('subjectModalBtn');
 
-// ===== ВЫБОР ПРЕДМЕТА + ЦЕНА =====
-const PRICE_PER_SUBJECT = 1200;
+// ===== ВЫБОР ПРЕДМЕТА + МОДАЛКА =====
 const selectedSubjects = new Set();
 let currentSubjectCard = null;
-
-// скидка в зависимости от количества предметов
-function getDiscount(count) {
-  if (count >= 4) return 0.15;
-  if (count === 3) return 0.10;
-  if (count === 2) return 0.05;
-  return 0;
-}
-
-const priceValue    = document.getElementById('priceValue');
-const priceOld      = document.getElementById('priceOld');
-const priceDiscount = document.getElementById('priceDiscount');
-const priceHint     = document.getElementById('priceHint');
-
-function updateTotal() {
-  if (!priceValue) return;
-
-  const count = selectedSubjects.size;
-  const baseTotal = count * PRICE_PER_SUBJECT;
-  const discount = getDiscount(count);
-  const finalTotal = Math.round(baseTotal * (1 - discount));
-
-  priceValue.textContent = finalTotal.toLocaleString('ru-RU');
-
-  if (discount > 0 && priceOld && priceDiscount) {
-    priceOld.hidden = false;
-    priceOld.textContent = baseTotal.toLocaleString('ru-RU') + ' ₽';
-
-    priceDiscount.hidden = false;
-    priceDiscount.textContent = '−' + Math.round(discount * 100) + '%';
-  } else if (priceOld && priceDiscount) {
-    priceOld.hidden = true;
-    priceDiscount.hidden = true;
-  }
-
-  if (priceHint) {
-    if (count === 0) {
-      priceHint.textContent = 'Выберите предметы, чтобы рассчитать стоимость';
-      priceHint.classList.remove('is-active');
-    } else {
-      priceHint.textContent = `Выбрано предметов: ${count}`;
-      priceHint.classList.add('is-active');
-    }
-  }
-  syncFormSubjectSelect();
-}
 
 // надпись на кнопке в модалке
 function updateModalButton(card) {
@@ -200,9 +153,8 @@ function updateModalButton(card) {
     isSelected ? 'Убрать предмет' : 'Выбрать предмет';
 }
 
-// модалка предмета
 if (subjectModal) {
-  function openSubjectModal(title, desc, iconClass) {
+  window.openSubjectModal = function(title, desc, iconClass) {
     subjectModalTitle.textContent = title;
     subjectModalText.textContent = desc;
     subjectModalIcon.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
@@ -212,15 +164,14 @@ if (subjectModal) {
     document.body.style.overflow = 'hidden';
 
     updateModalButton(currentSubjectCard);
-  }
+  };
 
-  function closeSubjectModal() {
+  window.closeSubjectModal = function() {
     subjectModal.classList.remove('is-open');
     subjectModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-  }
+  };
 
-  // клик по карточке предмета — открыть модалку
   document.querySelectorAll('.subject').forEach(card => {
     card.addEventListener('click', (e) => {
       e.preventDefault();
@@ -232,7 +183,6 @@ if (subjectModal) {
     });
   });
 
-  // закрытие
   subjectModal.querySelectorAll('[data-close-subject]').forEach(el => {
     el.addEventListener('click', closeSubjectModal);
   });
@@ -243,7 +193,6 @@ if (subjectModal) {
     }
   });
 
-  // кнопка «Выбрать / Убрать предмет»
   if (subjectModalBtn) {
     subjectModalBtn.addEventListener('click', () => {
       if (!currentSubjectCard) return;
@@ -259,33 +208,30 @@ if (subjectModal) {
       }
 
       closeSubjectModal();
-      updateTotal();
+      syncFormSubjectSelect();
     });
   }
 }
 
-// ===== ЗАПОЛНЕНИЕ БЛОКА ВЫБРАННЫХ ПРЕДМЕТОВ =====
-const formSubjects = document.getElementById('formSubjects');
+// ===== ОБНОВЛЕНИЕ БЛОКА ВЫБРАННЫХ ПРЕДМЕТОВ В ФОРМЕ =====
 const formSubjectInput = document.getElementById('formSubjectInput');
+// ===== ССЫЛКА НА БЛОК ВЫБРАННЫХ ПРЕДМЕТОВ =====
+const formSubjects = document.getElementById('formSubjects');
 
 function syncFormSubjectSelect() {
   if (!formSubjects || !formSubjectInput) return;
 
-  // очищаем блок
   formSubjects.innerHTML = '';
 
-  // если ничего не выбрано — заглушка
   if (selectedSubjects.size === 0) {
     const empty = document.createElement('span');
     empty.className = 'form__subjects-empty';
     empty.textContent = 'Выберите предметы';
     formSubjects.appendChild(empty);
-
     formSubjectInput.value = '';
     return;
   }
 
-  // выводим теги с названиями
   selectedSubjects.forEach(name => {
     const tag = document.createElement('span');
     tag.className = 'form__subjects-tag';
@@ -293,12 +239,11 @@ function syncFormSubjectSelect() {
     formSubjects.appendChild(tag);
   });
 
-  // отправляемое значение — через запятую
   formSubjectInput.value = [...selectedSubjects].join(', ');
 }
 
 // ===== КЛИК ПО БЛОКУ В ФОРМЕ → СКРОЛЛ К ПРЕДМЕТАМ =====
-if (formSubjects) {   // ← без const, переменная уже есть выше
+if (formSubjects) {
   formSubjects.addEventListener('click', () => {
     const subjectsSection = document.getElementById('subjects');
     if (!subjectsSection) return;
@@ -319,3 +264,91 @@ if (formSubjects) {   // ← без const, переменная уже есть 
     window.scrollTo({ top: offset, behavior: 'smooth' });
   });
 }
+
+// ============================================================
+// МОБИЛЬНАЯ ВЕРСИЯ
+// ============================================================
+function applyMobileVersion() {
+  const isMobile = window.innerWidth <= 720;
+
+  // если не мобилка — выходим (на всякий случай откатывать не нужно)
+  if (!isMobile) return;
+
+  // помечаем body — CSS будет опираться на этот класс
+  document.body.classList.add('is-mobile');
+
+  // ---------- 1. HEADER — оставляем только лого + бургер ----------
+  const headerBtn = document.querySelector('.header .btn');
+  if (headerBtn) headerBtn.style.display = 'none';
+
+  // ---------- 2. BENTO ----------
+
+  // 2.1 Меняем метку «Онлайн · 14–20 лет · Живые уроки…» на «Lumen Academy»
+  const bigLabel = document.querySelector('.bento__item--big .bento__label');
+  if (bigLabel) bigLabel.textContent = 'Lumen Academy';
+
+  // 2.2 Короткий текст в большой карточке
+  const bigLead = document.querySelector('.bento__item--big .bento__lead');
+  if (bigLead) {
+    bigLead.innerHTML = `
+      Онлайн-школа для подростков 14–20 лет. Готовим к ОГЭ, ЕГЭ
+      и поступлению. Только личные занятия с наставником, один на один.
+    `;
+  }
+
+  // 2.3 Короткие описания в остальных bento-карточках
+  const shortDescs = {
+    'accent': 'Отдельный предмет: исследование, текст, защита.',
+    'default': 'Живые уроки 1×1, не записи. Расписание под ученика.'
+  };
+
+  document.querySelectorAll('.bento__item').forEach(item => {
+    if (item.classList.contains('bento__item--big')) return;
+    if (item.classList.contains('bento__photo')) return;
+
+    const desc = item.querySelector('.bento__desc');
+    if (!desc) return;
+
+    if (item.classList.contains('bento__item--accent')) {
+      desc.textContent = shortDescs.accent;
+    } else {
+      // оставляем как есть, если это карточка «Формат»/«Старт»
+      // (там уже есть описания), но сокращаем если длинные
+      if (desc.textContent.length > 100) {
+        desc.textContent = shortDescs.default;
+      }
+    }
+  });
+
+  // 2.4 Удаляем фото-блок в bento
+  const bentoPhoto = document.querySelector('.bento__photo');
+  if (bentoPhoto) bentoPhoto.remove();
+
+  // ---------- 3. Удаляем MARQUEE ----------
+  const marquee = document.querySelector('.marquee');
+  if (marquee) marquee.remove();
+
+  // ---------- 4. FAQ — удаляем фото ----------
+  const faqPhoto = document.querySelector('.faq__photo');
+  if (faqPhoto) faqPhoto.remove();
+
+  // ---------- 5. FOOTER — убираем ссылки ----------
+  const footerLinks = document.querySelector('.footer__links');
+  if (footerLinks) footerLinks.remove();
+
+  // ---------- 6. Модалка предмета — сокращаем ----------
+  // (размер регулируется в CSS, тут только текст если нужно)
+}
+
+// запускаем при загрузке
+applyMobileVersion();
+
+// если пользователь меняет размер окна — перезагружаем страницу,
+// чтобы откатить или применить мобильную версию заново
+let lastMobile = window.innerWidth <= 720;
+window.addEventListener('resize', () => {
+  const nowMobile = window.innerWidth <= 720;
+  if (nowMobile !== lastMobile) {
+    location.reload();
+  }
+});
