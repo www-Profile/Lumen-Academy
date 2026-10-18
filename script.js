@@ -290,10 +290,11 @@ function applyMobileVersion() {
   // 2.2 Короткий текст в большой карточке
   const bigLead = document.querySelector('.bento__item--big .bento__lead');
   if (bigLead) {
-    bigLead.innerHTML = `
-      Онлайн-школа для подростков 14–20 лет. Готовим к ОГЭ, ЕГЭ
-      и поступлению. Только личные занятия с наставником, один на один.
-    `;
+bigLead.innerHTML = `
+  Онлайн-школа индивидуальных занятий. Готовим к ОГЭ и ЕГЭ,
+  помогаем с поступлением и учебными проектами.
+  Все уроки — один на один с преподавателем.
+`;
   }
 
 // 2.3 Короткие описания в bento-карточках
@@ -304,10 +305,9 @@ document.querySelectorAll('.bento__item').forEach(item => {
   const desc = item.querySelector('.bento__desc');
   if (!desc) return;
 
-  if (item.classList.contains('bento__item--accent')) {
-    // «Бонус» — чёрная карточка
-    desc.textContent = 'Учим собирать информацию, писать работу и защищать её публично.';
-  } else {
+if (item.classList.contains('bento__item--accent')) {
+  desc.textContent = 'Помогаем с индивидуальными проектами, курсовыми и научными работами.';
+} else {
     const label = item.querySelector('.bento__label');
     const key = label ? label.textContent.trim() : '';
 
@@ -335,7 +335,7 @@ document.querySelectorAll('.bento__item').forEach(item => {
   // ---------- CTA — короткий текст для телефона ----------
 const ctaLead = document.querySelector('.cta__lead');
 if (ctaLead) {
-  ctaLead.textContent = 'Оставьте заявку  наставник свяжется с вами в ближайшее время. Обсудим цель, уровень и подберём программу.';
+  ctaLead.textContent = 'Оставьте заявку — преподаватель свяжется с вами в ближайшее время. Обсудим цель, уровень и подберём программу.';
 }
 
   // ---------- 5. FOOTER — убираем ссылки ----------

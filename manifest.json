@@ -1,0 +1,13 @@
+{
+  "name": "Lumen Academy",
+  "short_name": "Lumen",
+  "description": "Онлайн-школа индивидуальных занятий: подготовка к ОГЭ, ЕГЭ и помощь с учебными проектами.",
+  "start_url": "/Lumen-Academy/",
+  "scope": "/Lumen-Academy/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FF6347",
+  "theme_color": "#FF6347",
+  "lang": "ru",
+  "dir": "ltr"
+}
