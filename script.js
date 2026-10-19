@@ -2,9 +2,15 @@
 const burger = document.querySelector('.burger');
 const nav = document.querySelector('.nav');
 if (burger && nav) {
-  burger.addEventListener('click', () => nav.classList.toggle('is-open'));
+  burger.addEventListener('click', () => {
+    nav.classList.toggle('is-open');
+    burger.classList.toggle('is-active');
+  });
   nav.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => nav.classList.remove('is-open'))
+    a.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+      burger.classList.remove('is-active');
+    })
   );
 }
 
@@ -76,9 +82,16 @@ document.querySelectorAll('.faq details').forEach(details => {
   const content = details.querySelector('.faq__content');
   if (!summary || !content) return;
 
-  if (details.hasAttribute('open')) {
-    content.style.height = 'auto';
-  }
+const isMobile = window.innerWidth <= 720;
+if (details.hasAttribute('open')) {
+    if (isMobile) {
+        // На телефоне принудительно закрываем первый открытый вопрос
+        details.removeAttribute('open');
+        content.style.height = '0';
+    } else {
+        content.style.height = 'auto';
+    }
+}
 
   function toggle() {
     if (details.dataset.animating === '1') return;
