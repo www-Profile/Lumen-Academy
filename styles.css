@@ -1498,3 +1498,153 @@ z-index: 1;
 @media (max-width: 380px) {
   .marquee__track { font-size: 14px; gap: 14px; animation-duration: 22s; }
 }
+
+
+/* ============================================================
+   SUBJECTS — ИСПРАВЛЕНИЕ ВЫЛЕЗАНИЯ НА ТЕЛЕФОНЕ
+   ============================================================ */
+
+/* Универсальные правила — чтобы карточки не вылезали */
+.subjects {
+  min-width: 0;   /* важно: разрешает сжиматься */
+}
+
+.subject {
+  min-width: 0;   /* важно: разрешает карточке сжиматься внутри grid-ячейки */
+  overflow: hidden; /* всё содержимое остаётся внутри */
+}
+
+.subject h3,
+.subject__desc,
+.subject__hint {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* -------- 1200–1400px — 3 колонки -------- */
+@media (max-width: 1400px) {
+  .subjects {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .subject {
+    padding: 24px 20px;
+    gap: 12px;
+  }
+  .subject h3 { font-size: 16px; }
+  .subject__desc { font-size: 13px; }
+}
+
+/* -------- 960–1200px — 3 колонки, компактнее -------- */
+@media (max-width: 1200px) {
+  .subjects {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .subject {
+    padding: 22px 16px;
+    gap: 10px;
+  }
+  .subject__icon {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+  }
+  .subject h3 { font-size: 15px; }
+  .subject__desc { font-size: 12.5px; }
+  .subject__hint { font-size: 11px; }
+}
+
+/* -------- 768–960px — 2 колонки -------- */
+@media (max-width: 960px) {
+  .subjects {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .subject {
+    padding: 20px 16px;
+    gap: 10px;
+  }
+  .subject__head { gap: 10px; }
+  .subject__icon {
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
+    border-radius: 10px;
+  }
+  .subject h3 { font-size: 15px; }
+  .subject__desc { font-size: 12.5px; }
+  .subject__hint { font-size: 10.5px; }
+}
+
+/* -------- 480–768px — 2 колонки, мелкие карточки -------- */
+@media (max-width: 768px) {
+  .subjects {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* minmax(0,1fr) — ключ! */
+    gap: 10px;
+  }
+  .subject {
+    padding: 16px 12px;
+    gap: 8px;
+  }
+  .subject__head { gap: 8px; }
+  .subject__icon {
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+    border-radius: 9px;
+  }
+  .subject h3 {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+  .subject__desc {
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+  .subject__hint {
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    line-height: 1.3;
+  }
+}
+
+/* -------- < 480px — 2 колонки, ещё мельче -------- */
+@media (max-width: 480px) {
+  .subjects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .subject {
+    padding: 14px 10px;
+    gap: 6px;
+    border-radius: 14px;
+  }
+  .subject__icon {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+  .subject h3 { font-size: 12px; }
+  .subject__desc { font-size: 10.5px; }
+  .subject__hint { font-size: 9px; }
+}
+
+/* -------- < 380px — совсем узкий телефон -------- */
+@media (max-width: 380px) {
+  .subjects {
+    gap: 6px;
+  }
+  .subject {
+    padding: 12px 8px;
+  }
+  .subject h3 { font-size: 11px; }
+  .subject__desc { font-size: 10px; }
+  .subject__hint { font-size: 8px; }
+  .subject__icon {
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+  }
+}
