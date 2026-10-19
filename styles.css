@@ -1,3 +1,6 @@
+/* ============================================================
+   VARIABLES & RESET
+   ============================================================ */
 :root {
   --tomato: #FF6347;
   --steel: #4682B4;
@@ -9,12 +12,10 @@
   --r: 20px;
   --pad: clamp(24px, 4vw, 72px);
 
-  /* единая тень */
   --shadow: 0 16px 48px rgba(70,130,180,0.2);
   --shadow-ink: 0 16px 48px rgba(26,26,26,0.18);
   --shadow-tomato: 0 16px 48px rgba(255,99,71,0.20);
 
-  /* единая рамка */
   --border: 1.5px solid var(--gray);
 }
 
@@ -29,13 +30,10 @@ body {
   background: var(--paper);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  scrollbar-width: none;   /* Firefox */
-  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-
-body::-webkit-scrollbar {
-  display: none;            /* Chrome, Safari, Opera */
-}
+body::-webkit-scrollbar { display: none; }
 
 h1, h2, h3, h4, .logo__main, .bento__num {
   font-family: 'Unbounded', sans-serif;
@@ -53,7 +51,9 @@ em { font-style: normal; color: var(--tomato); }
   padding: 0 var(--pad);
 }
 
-/* ===== BUTTONS ===== */
+/* ============================================================
+   BUTTONS
+   ============================================================ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -68,9 +68,6 @@ em { font-style: normal; color: var(--tomato); }
   transition: background 0.25s, box-shadow 0.3s, color 0.25s;
   white-space: nowrap;
 }
-.btn--lg { padding: 6px 40px; font-size: 15px; font-size: 20px;}
-.btn--full { width: 100%; }
-
 .btn--primary {
   background: var(--tomato);
   color: var(--white);
@@ -80,20 +77,41 @@ em { font-style: normal; color: var(--tomato); }
   box-shadow: var(--shadow-tomato);
 }
 
-.btn--ghost {
-  background: transparent;
-  color: var(--ink);
-  border: 1.5px solid var(--gray);
-  transition: background 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.3s;
-}
-.btn--ghost:hover {
-  background: var(--ink);
+.btn--project {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 64px;
+  border-radius: 16px;
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.01em;
   color: var(--white);
-  border-color: var(--ink);
-  box-shadow: var(--shadow-ink);
+  background: linear-gradient(135deg, var(--tomato) 0%, #ff8563 100%);
+  border: none;
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.3s;
+  box-shadow: 0 8px 24px rgba(255,99,71,0.28);
+}
+.btn--project i {
+  font-size: 14px;
+  transition: transform 0.3s;
+}
+.btn--project:hover {
+  box-shadow: 0 16px 48px rgba(255,99,71,0.45);
+}
+.btn--project:hover i {
+  transform: translateX(4px);
+}
+.btn--project-full {
+  width: 100%;
+  justify-content: center;
 }
 
-/* ===== HEADER ===== */
+/* ============================================================
+   HEADER
+   ============================================================ */
 .header {
   position: sticky;
   top: 0;
@@ -115,7 +133,6 @@ em { font-style: normal; color: var(--tomato); }
   align-items: flex-start;
   line-height: 1;
 }
-
 .logo__main {
   font-family: 'Unbounded', sans-serif;
   font-weight: 800;
@@ -123,8 +140,6 @@ em { font-style: normal; color: var(--tomato); }
   letter-spacing: -0.02em;
   color: var(--ink);
 }
-.logo__main::after { content: none; }
-
 .logo__sub {
   font-family: 'Unbounded', sans-serif;
   font-weight: 700;
@@ -133,7 +148,6 @@ em { font-style: normal; color: var(--tomato); }
   color: var(--tomato);
   white-space: nowrap;
 }
-
 .logo--light .logo__main { color: var(--white); }
 .logo--light .logo__sub  { color: var(--tomato); }
 
@@ -151,34 +165,18 @@ em { font-style: normal; color: var(--tomato); }
 
 .burger { display: none; }
 
-/* ===== HERO ===== */
+/* ============================================================
+   HERO + BENTO
+   ============================================================ */
 .hero {
   padding: 72px 0 56px;
   position: relative;
   overflow: hidden;
-
-  /* клетчатая сетка */
   background-image:
     linear-gradient(rgba(26,26,26,0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(26,26,26,0.045) 1px, transparent 1px);
   background-size: 48px 48px;
   background-position: 0 0;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  bottom: 300px; right: -160px;
-  width: 720px; height: 720px;
-  background: radial-gradient(circle, rgba(255,99,71,0.3), transparent 65%);
-  pointer-events: none;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: -10px; left: -100px;
-  width: 640px; height: 640px;
-  background: radial-gradient(circle, rgba(70,130,180,0.3), transparent 65%);
-  pointer-events: none;
 }
 
 .hero__title {
@@ -191,50 +189,6 @@ em { font-style: normal; color: var(--tomato); }
   z-index: 1;
 }
 
-/* ===== HERO CARD ===== */
-.hero__card {
-  position: relative;
-  display: inline-block;
-  max-width: 720px;
-  padding: 36px 40px 32px;
-  margin-bottom: 64px;
-  border: var(--border);
-  border-radius: 24px;
-  background: var(--white);
-  z-index: 1;
-  transition: box-shadow 0.3s;
-}
-.hero__card:hover {
-  box-shadow: var(--shadow);
-}
-
-.hero__card-label {
-  position: absolute;
-  top: 0;
-  left: 32px;
-  transform: translateY(-50%);
-  display: inline-block;
-  padding: 8px 16px;
-  font-family: 'Manrope', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--white);
-  background: var(--tomato);
-  border-radius: 999px;
-  white-space: nowrap;
-}
-
-.hero__lead {
-  font-size: 18px;
-  line-height: 1.55;
-  color: #444;
-  max-width: none;
-  margin: 0;
-}
-
-/* ===== BENTO ===== */
 .bento {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -243,21 +197,20 @@ em { font-style: normal; color: var(--tomato); }
   position: relative;
   z-index: 1;
 }
+
 .bento__item {
   background: var(--white);
   border: var(--border);
   border-radius: var(--r);
-  padding: 32px 26px 26px;      /* +6px сверху, чтобы текст не наезжал на ярлык */
+  padding: 32px 26px 26px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 14px;
   transition: box-shadow 0.3s;
-  position: relative;            /* ← якорь для ярлыка */
+  position: relative;
   z-index: 1;
 }
-
-/* подсветка при наведении — все, кроме фото */
 .bento__item:not(.bento__photo):hover {
   box-shadow: var(--shadow);
 }
@@ -293,11 +246,6 @@ em { font-style: normal; color: var(--tomato); }
   white-space: nowrap;
 }
 
-/* у акцентной (чёрной) карточки — ярлык тоже tomato, читается отлично */
-.bento__item--accent .bento__label {
-  color: var(--white);
-  background: var(--tomato);
-}
 .bento__num {
   font-size: clamp(72px, 10vw, 140px);
   font-weight: 800;
@@ -308,7 +256,6 @@ em { font-style: normal; color: var(--tomato); }
   gap: 6px;
   white-space: nowrap;
 }
-
 .bento__num-small {
   font-size: 0.2em;
   color: var(--tomato);
@@ -317,6 +264,7 @@ em { font-style: normal; color: var(--tomato); }
   text-transform: lowercase;
   font-family: 'Manrope', sans-serif;
 }
+
 .bento__title {
   font-family: 'Unbounded', sans-serif;
   font-weight: 700;
@@ -328,10 +276,7 @@ em { font-style: normal; color: var(--tomato); }
   font-size: 15px;
   line-height: 1.55;
   color: #555;
-  margin: 0;
 }
-
-/* в тёмной (accent) карточке — светлый текст */
 .bento__item--accent .bento__desc {
   color: rgba(255,255,255,0.75);
 }
@@ -340,11 +285,11 @@ em { font-style: normal; color: var(--tomato); }
   color: #888;
 }
 
+/* Hero photo */
 .bento__photo {
   grid-column: span 2;
-  padding: 0px;
+  padding: 0;
   overflow: hidden;
-  border-radius: none;
   border: none;
   background: none;
   display: flex;
@@ -353,7 +298,6 @@ em { font-style: normal; color: var(--tomato); }
   z-index: 0;
   margin-top: -14px;
 }
-
 .bento__photo img {
   max-width: 100%;
   max-height: 260px;
@@ -363,7 +307,9 @@ em { font-style: normal; color: var(--tomato); }
   display: block;
 }
 
-/* ===== MARQUEE — бесконечная лента ===== */
+/* ============================================================
+   MARQUEE
+   ============================================================ */
 .marquee {
   overflow: hidden;
   border-top: 1px solid var(--gray);
@@ -371,24 +317,9 @@ em { font-style: normal; color: var(--tomato); }
   padding: 14px 0;
   background: var(--white);
   position: relative;
-
-  /* Плавное затухание по краям */
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
-  );
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
 }
-
 .marquee__track {
   display: flex;
   gap: 32px;
@@ -401,31 +332,21 @@ em { font-style: normal; color: var(--tomato); }
   letter-spacing: -0.02em;
   will-change: transform;
 }
-
-/* Каждый нечётный span — точка-разделитель */
 .marquee__track span:nth-child(even) {
   color: var(--tomato);
   opacity: 0.85;
 }
-
-/* Ключевой трюк: дубликат набора создаётся через ::before/::after псевдоэлементы */
-.marquee__track::before,
-.marquee__track::after {
-  content: '';
-  display: none;
-}
-
-/* Пауза при ховере (опционально, приятный UX) */
 .marquee:hover .marquee__track {
   animation-play-state: paused;
 }
-
 @keyframes marqueeScroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 
-/* ===== SECTION ===== */
+/* ============================================================
+   SECTION — COMMON
+   ============================================================ */
 .section { padding: 112px 0; }
 .section__head { margin-bottom: 56px; }
 .section__title {
@@ -436,10 +357,12 @@ em { font-style: normal; color: var(--tomato); }
 }
 .section__title--light { color: var(--white); }
 
-/* ===== SUBJECTS ===== */
+/* ============================================================
+   SUBJECTS
+   ============================================================ */
 .subjects {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -454,19 +377,16 @@ em { font-style: normal; color: var(--tomato); }
   transition: box-shadow 0.3s;
   position: relative;
   cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
 }
+.subject:hover { box-shadow: var(--shadow-ink); }
 
-.subject:hover {
-  box-shadow: var(--shadow-ink);
-}
-
-/* строка «иконка + заголовок» */
 .subject__head {
   display: flex;
   align-items: center;
   gap: 14px;
 }
-
 .subject__icon {
   font-size: 22px;
   color: var(--tomato);
@@ -479,22 +399,22 @@ em { font-style: normal; color: var(--tomato); }
   border-radius: 12px;
   flex-shrink: 0;
 }
-
 .subject h3 {
   font-family: 'Unbounded', sans-serif;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
-
 .subject__desc {
   font-size: 14px;
   line-height: 1.55;
   color: #666;
-  margin: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
-
 .subject__hint {
   font-size: 12px;
   font-weight: 600;
@@ -502,8 +422,10 @@ em { font-style: normal; color: var(--tomato); }
   text-transform: uppercase;
   color: var(--steel);
   margin-top: auto;
-    white-space: normal;   /* разрешаем перенос */
+  white-space: normal;
   line-height: 1.4;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .subject--selected {
@@ -511,7 +433,9 @@ em { font-style: normal; color: var(--tomato); }
   box-shadow: 0 0 0 2px var(--tomato), 0 16px 48px rgba(255,99,71,0.15);
 }
 
-/* ===== PROJECT ===== */
+/* ============================================================
+   PROJECT
+   ============================================================ */
 .section--dark {
   background-color: var(--ink);
   color: var(--white);
@@ -524,53 +448,27 @@ em { font-style: normal; color: var(--tomato); }
   overflow: hidden;
 }
 
-.section--dark::before,
-.section--dark::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  filter: blur(60px);
-  z-index: 0;
-}
-
-.section--dark::before {
-  top: -200px;
-  right: -300px;
-  width: 1000px;
-  height: 1000px;
-  background: radial-gradient(circle, var(--ink), transparent 1000%);
-}
-
-.section--dark::after {
-  top: -200px;
-  left: -300px;
-  width: 1000px;
-  height: 1000px;
-  background: radial-gradient(circle, var(--ink), transparent 1000%);
-}
 .project {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
   gap: 88px;
   align-items: center;
-  position: relative;   /* ← нужен для z-index */
+  position: relative;
   z-index: 1;
 }
 .project__lead {
   font-size: 18px;
   color: rgba(255,255,255,0.65);
   margin: 28px 0 36px;
-  max-width: auto;
 }
 .project__steps {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-z-index: 1;
+  z-index: 1;
 }
 .project__steps li {
-    background: color-mix(in srgb, var(--ink) 80%, black);
+  background: color-mix(in srgb, var(--ink) 80%, black);
   border: 1.5px solid rgba(255,255,255,0.12);
   border-radius: var(--r);
   padding: 26px;
@@ -596,44 +494,9 @@ z-index: 1;
   color: rgba(255,255,255,0.5);
 }
 
-/* ===== PROJECT BUTTON ===== */
-.btn--project {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  padding: 18px 64px;
-  border-radius: 16px;
-  font-family: 'Unbounded', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: -0.01em;
-  color: var(--white);
-  background: linear-gradient(135deg, var(--tomato) 0%, #ff8563 100%);
-  border: none;
-  cursor: pointer;
-  transition: box-shadow 0.3s, transform 0.3s;
-  box-shadow: 0 8px 24px rgba(255,99,71,0.28);
-}
-
-.btn--project i {
-  font-size: 14px;
-  transition: transform 0.3s;
-}
-
-.btn--project:hover {
-  box-shadow: 0 16px 48px rgba(255,99,71,0.45);
-}
-
-.btn--project:hover i {
-  transform: translateX(4px);
-}
-
-.btn--project-full {
-  width: 100%;
-  justify-content: center;
-}
-
-/* ===== TEACHERS ===== */
+/* ============================================================
+   TEACHERS
+   ============================================================ */
 .teachers {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -669,30 +532,9 @@ z-index: 1;
   color: #666;
 }
 
-/* ===== FAQ LEFT COLUMN ===== */
-.faq__left {
-  display: flex;
-  flex-direction: column;
-  position: sticky;
-  align-self: start;
-}
-
-.faq__photo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: none;
-}
-
-.faq__photo img {
-  max-width: 800px;
-  height: auto;
-  display: block;
-  border-radius: none;
-  object-fit: cover;
-}
-
+/* ============================================================
+   FAQ
+   ============================================================ */
 .faq__wrap {
   display: grid;
   grid-template-columns: 1fr 1.6fr;
@@ -700,11 +542,33 @@ z-index: 1;
   align-items: start;
 }
 
+.faq__left {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: sticky;
+  align-self: start;
+}
+
+.faq__photo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+}
+.faq__photo img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
 .faq {
   display: grid;
   gap: 12px;
 }
-
 .faq details {
   background: var(--white);
   border: var(--border);
@@ -713,16 +577,13 @@ z-index: 1;
   overflow: hidden;
   transition: box-shadow 0.3s;
 }
-
 .faq details:hover {
   box-shadow: 0 12px 36px rgba(70,130,180,0.14);
 }
-
 .faq details[open] {
   box-shadow: var(--shadow-ink);
 }
 
-/* весь summary — кликабельный */
 .faq summary {
   list-style: none;
   cursor: pointer;
@@ -735,10 +596,8 @@ z-index: 1;
   font-size: 17px;
   user-select: none;
 }
-
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary::marker { content: ''; }
-
 .faq summary::after {
   content: '+';
   color: var(--steel);
@@ -748,41 +607,35 @@ z-index: 1;
   flex-shrink: 0;
   transition: transform 0.3s;
 }
-
 .faq details[open] summary::after {
   transform: rotate(45deg);
 }
 
-/* контейнер для плавного раскрытия — управляется JS */
 .faq .faq__content {
   height: 0;
   overflow: hidden;
   cursor: pointer;
 }
-
 .faq p {
   margin: 0;
   padding: 0 28px 20px;
   color: #555;
   font-size: 15px;
   line-height: 1.65;
-  max-width: auto;
   cursor: pointer;
 }
-
 .faq li {
   margin: 0;
-  padding: 0 28px 0px;
+  padding: 0 28px 0;
   color: #555;
   font-size: 15px;
   line-height: 1.65;
-  max-width: auto;
   cursor: pointer;
-  list-style: none;
 }
 
-
-/* ===== CTA ===== */
+/* ============================================================
+   CTA + FORM
+   ============================================================ */
 .cta {
   background: var(--steel);
   color: var(--white);
@@ -797,7 +650,6 @@ z-index: 1;
   font-size: 18px;
   color: rgba(255,255,255,0.75);
   margin-top: 28px;
-  max-width: auto;
 }
 
 .form {
@@ -807,10 +659,23 @@ z-index: 1;
   padding: 32px;
   border: var(--border);
   border-radius: var(--r);
-  transition: box-shadow 0.3s;
 }
-
-.form input, .form select {
+.form__head { margin-bottom: 4px; }
+.form__title {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.form__subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+.form input,
+.form select {
   font-family: 'Manrope', sans-serif;
   font-size: 15px;
   padding: 10px 16px;
@@ -821,20 +686,47 @@ z-index: 1;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
   width: 100%;
 }
-.form input:focus, .form select:focus {
+.form input:focus,
+.form select:focus {
   outline: none;
   border-color: var(--tomato);
   background: var(--white);
   box-shadow: 0 0 0 4px rgba(255,99,71,0.12);
 }
-.form__note {
+
+/* Form subjects */
+.form__subjects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 16px;
+  border: var(--border);
+  border-radius: 12px;
+  background: var(--paper);
+  min-height: 52px;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.3s;
+}
+.form__subjects-empty {
+  font-size: 14px;
+  color: #999;
+}
+.form__subjects-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: rgba(255,99,71,0.12);
+  color: var(--tomato);
+  border-radius: 999px;
   font-size: 13px;
-  color: var(--steel);
-  min-height: 16px;
-  text-align: center;
+  font-weight: 600;
+  font-family: 'Manrope', sans-serif;
 }
 
-/* ===== FOOTER ===== */
+/* ============================================================
+   FOOTER
+   ============================================================ */
 .footer {
   background: var(--ink);
   color: #888;
@@ -856,7 +748,9 @@ z-index: 1;
 }
 .footer__links a:hover { color: var(--tomato); }
 
-/* ===== ЯКОРЯ — отступ при скролле ===== */
+/* ============================================================
+   ANCHORS
+   ============================================================ */
 #subjects,
 #project,
 #teachers,
@@ -865,27 +759,9 @@ z-index: 1;
   scroll-margin-top: 120px;
 }
 
-/* ===== FORM HEAD ===== */
-.form__head {
-  margin-bottom: 4px;
-}
-
-.form__title {
-  font-family: 'Unbounded', sans-serif;
-  font-weight: 700;
-  font-size: 22px;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  margin: 0 0 6px;
-}
-
-.form__subtitle {
-  font-size: 14px;
-  color: #666;
-  margin: 0;
-}
-
-/* ===== MODAL ===== */
+/* ============================================================
+   MODAL
+   ============================================================ */
 .modal {
   position: fixed;
   inset: 0;
@@ -898,12 +774,10 @@ z-index: 1;
   visibility: hidden;
   transition: opacity 0.25s ease, visibility 0.25s ease;
 }
-
 .modal.is-open {
   opacity: 1;
   visibility: visible;
 }
-
 .modal__backdrop {
   position: absolute;
   inset: 0;
@@ -911,7 +785,6 @@ z-index: 1;
   backdrop-filter: blur(6px);
   cursor: pointer;
 }
-
 .modal__window {
   position: relative;
   z-index: 1;
@@ -926,11 +799,9 @@ z-index: 1;
   transform: translateY(20px) scale(0.96);
   transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
-
 .modal.is-open .modal__window {
   transform: translateY(0) scale(1);
 }
-
 .modal__close {
   position: absolute;
   top: 16px;
@@ -948,12 +819,10 @@ z-index: 1;
   justify-content: center;
   transition: background 0.2s, color 0.2s;
 }
-
 .modal__close:hover {
   background: var(--tomato);
   color: var(--white);
 }
-
 .modal__icon {
   width: 72px;
   height: 72px;
@@ -966,7 +835,6 @@ z-index: 1;
   border-radius: 50%;
   font-size: 30px;
 }
-
 .modal__title {
   font-family: 'Unbounded', sans-serif;
   font-weight: 700;
@@ -975,7 +843,6 @@ z-index: 1;
   color: var(--ink);
   margin: 0 0 12px;
 }
-
 .modal__text {
   font-size: 15px;
   line-height: 1.6;
@@ -985,8 +852,6 @@ z-index: 1;
   margin-left: auto;
   margin-right: auto;
 }
-
-/* цена в модалке */
 .modal__price {
   display: flex;
   align-items: baseline;
@@ -998,7 +863,6 @@ z-index: 1;
   border: var(--border);
   border-radius: 14px;
 }
-
 .modal__price-value {
   font-family: 'Unbounded', sans-serif;
   font-weight: 800;
@@ -1006,58 +870,26 @@ z-index: 1;
   letter-spacing: -0.02em;
   color: var(--tomato);
 }
-
 .modal__price-unit {
   font-size: 13px;
   color: #666;
 }
-
 .modal__btn {
   width: 100%;
   justify-content: center;
 }
 
-/* ===== FORM SUBJECTS ===== */
-.form__subjects {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 14px 16px;
-  border: var(--border);
-  border-radius: 12px;
-  background: var(--paper);
-  min-height: 52px;
-  align-items: center;
-  cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.3s;
-}
-
-.form__subjects-empty {
-  font-size: 14px;
-  color: #999;
-}
-
-.form__subjects-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
-  background: rgba(255,99,71,0.12);
-  color: var(--tomato);
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: 'Manrope', sans-serif;
-}
-
 /* ============================================================
-   АДАПТАЦИЯ — ПЛАНШЕТЫ, НОУТБУКИ, БОЛЬШИЕ ЭКРАНЫ
+   BREAKPOINT 1400 — LAPTOP
+   FAQ photo goes BELOW questions
    ============================================================ */
-
-/* Ноутбуки 1200–1400px — 4 колонки ещё ок, но уменьшаем отступы */
 @media (max-width: 1400px) {
   :root { --pad: clamp(20px, 3.2vw, 56px); }
 
+  .section { padding: 96px 0; }
   .hero__title { font-size: clamp(36px, 5vw, 80px); }
+
+  .bento { gap: 14px; }
   .bento__label {
     left: 14px;
     padding: 4px 16px;
@@ -1065,62 +897,85 @@ z-index: 1;
     letter-spacing: 0.12em;
   }
 
-  .bento { gap: 14px; }
-  .subjects { gap: 14px; }
-  .teachers { gap: 16px; }
+  .subjects {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .subject { padding: 24px 20px; gap: 12px; }
+  .subject h3 { font-size: 16px; }
+  .subject__desc { font-size: 13px; }
 
+  .teachers { gap: 16px; }
   .project { gap: 64px; }
-  .faq__wrap { gap: 56px; }
   .cta__inner { gap: 56px; }
 
-  .section { padding: 96px 0; }
+  /* FAQ: заголовок → вопросы → фото */
+  .faq__wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+  .faq__left { display: contents; }
+  .faq__left .section__head { order: 1; margin-bottom: 0; }
+  .faq { order: 2; width: 100%; }
+  .faq__photo {
+    order: 3;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .faq__photo img {
+    max-width: 720px;
+    margin: 0 auto;
+  }
 }
 
-/* Ноутбуки 1100–1200px — плавно уменьшаем карточки */
+/* ============================================================
+   BREAKPOINT 1200 — SMALL LAPTOP
+   ============================================================ */
 @media (max-width: 1200px) {
   :root { --pad: clamp(20px, 3vw, 44px); }
 
+  .section { padding: 80px 0; }
   .hero__title { font-size: clamp(34px, 5vw, 64px); }
 
-  /* Bento — уменьшаем число крупных элементов */
   .bento {
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
     grid-auto-rows: minmax(170px, auto);
   }
-  .bento__item--big {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
+  .bento__item--big { grid-column: span 2; grid-row: span 2; }
+  .bento__item--accent { grid-column: span 2; }
   .bento__label {
     left: 14px;
     padding: 3px 14px;
     font-size: 11px;
     letter-spacing: 0.12em;
   }
-  .bento__item--accent { grid-column: span 2; }
-  .bento__photo { display: none; }
-
   .bento__num { font-size: clamp(56px, 9vw, 96px); }
   .bento__title { font-size: 20px; }
-  .bento__desc, .bento__lead { font-size: 14px; }
+  .bento__desc,
+  .bento__lead { font-size: 14px; }
+  /* Hero photo — видна, но меньше */
+  .bento__photo img {
+    max-height: 200px;
+    max-width: 90%;
+  }
 
-  /* Subjects — 3 колонки вместо 4, карточки крупнее */
   .subjects {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
   }
-  .subject { padding: 24px 20px; }
-  .subject h3 { font-size: 16px; }
-  .subject__desc { font-size: 13px; }
+  .subject { padding: 22px 16px; gap: 10px; }
+  .subject__icon { width: 42px; height: 42px; font-size: 18px; }
+  .subject h3 { font-size: 15px; }
+  .subject__desc { font-size: 12.5px; }
+  .subject__hint { font-size: 11px; }
 
-  /* Teachers — 3 колонки */
   .teachers {
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
 
-  /* Project */
   .project {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -1130,23 +985,20 @@ z-index: 1;
     gap: 14px;
   }
 
-  /* FAQ */
-  .faq__wrap {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-  .faq__photo { display: none; }
+  /* FAQ: фото меньше */
+  .faq__wrap { gap: 32px; }
+  .faq__photo img { max-width: 560px; }
 
-  /* CTA */
   .cta__inner {
     grid-template-columns: 1fr;
     gap: 32px;
   }
-
-  .section { padding: 80px 0; }
 }
 
-/* Планшеты 768–960px — 2 колонки для карточек */
+/* ============================================================
+   BREAKPOINT 960 — TABLET
+   Hero photo & FAQ photo both HIDDEN
+   ============================================================ */
 @media (max-width: 960px) {
   :root { --pad: clamp(18px, 4vw, 32px); }
 
@@ -1160,38 +1012,44 @@ z-index: 1;
     margin-bottom: 28px;
   }
 
-  /* Bento — 2 колонки */
   .bento {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     grid-auto-rows: minmax(160px, auto);
   }
-    .bento__label {
+  .bento__item--big { grid-column: span 2; grid-row: span 1; }
+  .bento__item--accent { grid-column: span 2; }
+  .bento__photo { display: none; }
+  .bento__label {
     left: 14px;
     padding: 3px 14px;
     font-size: 10px;
     letter-spacing: 0.12em;
   }
-  .bento__item--big { grid-column: span 2; grid-row: span 1; }
-  .bento__item--accent { grid-column: span 2; }
-  .bento__photo { display: none; }
-
   .bento__num { font-size: clamp(52px, 12vw, 88px); }
   .bento__title { font-size: 18px; }
-  .bento__desc, .bento__lead { font-size: 14px; }
+  .bento__desc,
+  .bento__lead { font-size: 14px; }
 
-  .marquee__track { font-size: 18px; gap: 20px; }
+  .marquee { padding: 12px 0; }
+  .marquee__track { font-size: 20px; gap: 24px; animation-duration: 32s; }
 
-  /* Subjects — 2 колонки */
   .subjects {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
   }
-  .subject { padding: 20px 18px; }
+  .subject { padding: 20px 16px; gap: 10px; }
+  .subject__head { gap: 10px; }
+  .subject__icon {
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
+    border-radius: 10px;
+  }
   .subject h3 { font-size: 15px; }
   .subject__desc { font-size: 12.5px; }
+  .subject__hint { font-size: 10.5px; }
 
-  /* Teachers — 2 колонки */
   .teachers {
     grid-template-columns: repeat(2, 1fr);
     gap: 14px;
@@ -1199,7 +1057,6 @@ z-index: 1;
   .teacher h3 { font-size: 15px; }
   .teacher p { font-size: 12.5px; }
 
-  /* Project */
   .project__steps {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
@@ -1208,12 +1065,14 @@ z-index: 1;
   .project__steps h4 { font-size: 16px; }
   .project__steps p { font-size: 12.5px; }
 
-  /* FAQ */
+  .faq__photo { display: none; }
+  .faq__wrap { gap: 28px; }
   .faq summary {
     padding: 20px 22px;
     font-size: 15px;
   }
-  .faq p, .faq li { font-size: 14px; }
+  .faq p,
+  .faq li { font-size: 14px; }
 
   .section { padding: 64px 0; }
   .section__head { margin-bottom: 36px; }
@@ -1221,28 +1080,23 @@ z-index: 1;
 }
 
 /* ============================================================
-   ТЕЛЕФОНЫ — блоки по 2 в ряд
+   BREAKPOINT 720 — MOBILE
    ============================================================ */
 @media (max-width: 720px) {
-  :root {
-    --pad: 18px;
-    --r: 16px;
-  }
+  :root { --pad: 18px; --r: 16px; }
 
   .section { padding: 48px 0; }
   .section__head { margin-bottom: 24px; }
   .section__title { font-size: clamp(24px, 7vw, 36px); }
 
-  /* Hero */
   .hero { padding: 32px 0 32px; }
   .hero__title {
     font-size: clamp(26px, 8vw, 42px);
     margin-bottom: 24px;
     letter-spacing: -0.04em;
   }
-  .hero::before, .hero::after { width: 320px; height: 320px; }
 
-  /* Bento — по 2 в ряд */
+  /* Bento mobile */
   .bento {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -1266,24 +1120,22 @@ z-index: 1;
   .bento__num { font-size: clamp(40px, 12vw, 64px); }
   .bento__num-small { font-size: 0.28em; }
   .bento__title { font-size: 15px; }
-  .bento__desc, .bento__lead, .bento__hint {
+  .bento__desc,
+  .bento__lead,
+  .bento__hint {
     font-size: 12px;
     line-height: 1.45;
   }
 
-  /* Marquee */
-  .marquee { padding: 8px 0; }
-  .marquee__track { font-size: 16px; gap: 18px; animation-duration: 30s; }
+  .marquee { padding: 10px 0; }
+  .marquee__track { font-size: 16px; gap: 18px; animation-duration: 26s; }
 
-  /* Subjects — по 2 в ряд */
+  /* Subjects mobile */
   .subjects {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
-  .subject {
-    padding: 16px 12px;
-    gap: 8px;
-  }
+  .subject { padding: 16px 12px; gap: 8px; }
   .subject__head { gap: 8px; }
   .subject__icon {
     width: 34px;
@@ -1291,15 +1143,16 @@ z-index: 1;
     font-size: 15px;
     border-radius: 9px;
   }
-  .subject h3 { font-size: 13px; letter-spacing: -0.01em; }
+  .subject h3 { font-size: 13px; letter-spacing: -0.01em; line-height: 1.2; }
   .subject__desc { font-size: 11.5px; line-height: 1.4; }
-  .subject__hint { font-size: 9.5px; letter-spacing: 0.06em; }
-
-  /* Project — по 2 в ряд */
-  .project {
-    grid-template-columns: 1fr;
-    gap: 24px;
+  .subject__hint {
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    line-height: 1.3;
   }
+
+  /* Project mobile */
+  .project { gap: 24px; }
   .project__lead { font-size: 14px; margin: 18px 0 24px; }
   .project__steps {
     grid-template-columns: repeat(2, 1fr);
@@ -1307,10 +1160,7 @@ z-index: 1;
   }
   .project__steps li { padding: 16px 12px; }
   .project__steps span { font-size: 12px; }
-  .project__steps h4 {
-    font-size: 14px;
-    margin: 8px 0 6px;
-  }
+  .project__steps h4 { font-size: 14px; margin: 8px 0 6px; }
   .project__steps p { font-size: 11.5px; line-height: 1.45; }
 
   .btn--project {
@@ -1318,9 +1168,8 @@ z-index: 1;
     font-size: 13px;
     gap: 10px;
   }
-  .btn--project-full { width: 100%; justify-content: center; }
 
-  /* Teachers — по 2 в ряд */
+  /* Teachers mobile */
   .teachers {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
@@ -1329,7 +1178,7 @@ z-index: 1;
   .teacher h3 { font-size: 14px; }
   .teacher p { font-size: 11.5px; }
 
-  /* FAQ */
+  /* FAQ mobile */
   .faq { gap: 10px; }
   .faq summary {
     padding: 16px 18px;
@@ -1347,6 +1196,7 @@ z-index: 1;
     font-size: 13px;
     line-height: 1.55;
   }
+  .faq__wrap { gap: 20px; }
 
   /* CTA + Form */
   .cta__inner { gap: 24px; }
@@ -1354,7 +1204,8 @@ z-index: 1;
   .form { padding: 20px 16px; }
   .form__title { font-size: 17px; }
   .form__subtitle { font-size: 12.5px; }
-  .form input, .form select {
+  .form input,
+  .form select {
     padding: 11px 14px;
     font-size: 14px;
   }
@@ -1381,23 +1232,16 @@ z-index: 1;
   .footer__links a { font-size: 12.5px; }
   .footer__copy { font-size: 12px; }
 
-  /* Якоря */
-  #subjects, #project, #teachers, #faq, #contact {
-    scroll-margin-top: 76px;
-  }
-}
+  /* Anchors */
+  #subjects,
+  #project,
+  #teachers,
+  #faq,
+  #contact { scroll-margin-top: 76px; }
 
-/* ============================================================
-   БУРГЕР-МЕНЮ НА ТЕЛЕФОНЕ
-   ============================================================ */
+  /* Burger menu */
+  .nav { display: none; }
 
-@media (max-width: 720px) {
-  /* Прячем обычное меню */
-  .nav {
-    display: none;
-  }
-
-  /* Показываем бургер */
   .burger {
     display: flex;
     flex-direction: column;
@@ -1410,7 +1254,6 @@ z-index: 1;
     margin-left: auto;
     order: 3;
   }
-
   .burger span {
     display: block;
     width: 24px;
@@ -1419,19 +1262,10 @@ z-index: 1;
     border-radius: 2px;
     transition: transform 0.25s ease, opacity 0.25s ease;
   }
+  .burger.is-active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  .burger.is-active span:nth-child(2) { opacity: 0; }
+  .burger.is-active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-  /* Анимация в крестик */
-  .burger.is-active span:nth-child(1) {
-    transform: translateY(7.5px) rotate(45deg);
-  }
-  .burger.is-active span:nth-child(2) {
-    opacity: 0;
-  }
-  .burger.is-active span:nth-child(3) {
-    transform: translateY(-7.5px) rotate(-45deg);
-  }
-
-  /* Выезжающее меню */
   .nav.is-open {
     display: flex;
     flex-direction: column;
@@ -1447,169 +1281,25 @@ z-index: 1;
     box-shadow: 0 12px 24px -8px rgba(0,0,0,0.1);
     animation: navSlide 0.25s ease;
   }
-
   .nav.is-open a {
     font-size: 16px;
     font-weight: 600;
     padding: 6px 0;
     border-bottom: 1px solid var(--gray);
   }
-  .nav.is-open a:last-child {
-    border-bottom: none;
-  }
+  .nav.is-open a:last-child { border-bottom: none; }
 
   @keyframes navSlide {
     from { opacity: 0; transform: translateY(-8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Кнопку «Записаться» на телефоне скрываем — есть в меню/секции контактов */
-  .header .btn--primary {
-    display: none;
-  }
+  .header .btn--primary { display: none; }
 }
-
-/* Очень маленькие телефоны */
-@media (max-width: 380px) {
-  .hero__title { font-size: 24px; }
-  .bento__title { font-size: 14px; }
-  .bento__num { font-size: 36px; }
-  .subject h3 { font-size: 12px; }
-  .subject__desc { font-size: 10.5px; }
-  .teacher h3 { font-size: 13px; }
-  .teacher p { font-size: 10.5px; }
-  .project__steps h4 { font-size: 13px; }
-  .project__steps p { font-size: 10.5px; }
-}
-
-/* Планшеты */
-@media (max-width: 968px) {
-  .marquee { padding: 12px 0;}
-  .marquee__track { font-size: 20px; gap: 24px; animation-duration: 32s; }
-}
-
-/* Телефоны */
-@media (max-width: 720px) {
-  .marquee { padding: 10px 0;}
-  .marquee__track { font-size: 16px; gap: 18px; animation-duration: 26s; }
-}
-
-/* Очень узкие телефоны */
-@media (max-width: 380px) {
-  .marquee__track { font-size: 14px; gap: 14px; animation-duration: 22s; }
-}
-
 
 /* ============================================================
-   SUBJECTS — ИСПРАВЛЕНИЕ ВЫЛЕЗАНИЯ НА ТЕЛЕФОНЕ
+   BREAKPOINT 480 — SMALL PHONES (subjects further)
    ============================================================ */
-
-/* Универсальные правила — чтобы карточки не вылезали */
-.subjects {
-  min-width: 0;   /* важно: разрешает сжиматься */
-}
-
-.subject {
-  min-width: 0;   /* важно: разрешает карточке сжиматься внутри grid-ячейки */
-  overflow: hidden; /* всё содержимое остаётся внутри */
-}
-
-.subject h3,
-.subject__desc,
-.subject__hint {
-  overflow-wrap: break-word;
-  word-break: break-word;
-}
-
-/* -------- 1200–1400px — 3 колонки -------- */
-@media (max-width: 1400px) {
-  .subjects {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-  .subject {
-    padding: 24px 20px;
-    gap: 12px;
-  }
-  .subject h3 { font-size: 16px; }
-  .subject__desc { font-size: 13px; }
-}
-
-/* -------- 960–1200px — 3 колонки, компактнее -------- */
-@media (max-width: 1200px) {
-  .subjects {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
-  .subject {
-    padding: 22px 16px;
-    gap: 10px;
-  }
-  .subject__icon {
-    width: 42px;
-    height: 42px;
-    font-size: 18px;
-  }
-  .subject h3 { font-size: 15px; }
-  .subject__desc { font-size: 12.5px; }
-  .subject__hint { font-size: 11px; }
-}
-
-/* -------- 768–960px — 2 колонки -------- */
-@media (max-width: 960px) {
-  .subjects {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-  .subject {
-    padding: 20px 16px;
-    gap: 10px;
-  }
-  .subject__head { gap: 10px; }
-  .subject__icon {
-    width: 40px;
-    height: 40px;
-    font-size: 17px;
-    border-radius: 10px;
-  }
-  .subject h3 { font-size: 15px; }
-  .subject__desc { font-size: 12.5px; }
-  .subject__hint { font-size: 10.5px; }
-}
-
-/* -------- 480–768px — 2 колонки, мелкие карточки -------- */
-@media (max-width: 768px) {
-  .subjects {
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* minmax(0,1fr) — ключ! */
-    gap: 10px;
-  }
-  .subject {
-    padding: 16px 12px;
-    gap: 8px;
-  }
-  .subject__head { gap: 8px; }
-  .subject__icon {
-    width: 34px;
-    height: 34px;
-    font-size: 15px;
-    border-radius: 9px;
-  }
-  .subject h3 {
-    font-size: 13px;
-    line-height: 1.2;
-  }
-  .subject__desc {
-    font-size: 11.5px;
-    line-height: 1.4;
-  }
-  .subject__hint {
-    font-size: 9.5px;
-    letter-spacing: 0.06em;
-    line-height: 1.3;
-  }
-}
-
-/* -------- < 480px — 2 колонки, ещё мельче -------- */
 @media (max-width: 480px) {
   .subjects {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1631,20 +1321,25 @@ z-index: 1;
   .subject__hint { font-size: 9px; }
 }
 
-/* -------- < 380px — совсем узкий телефон -------- */
+/* ============================================================
+   BREAKPOINT 380 — TINY PHONES
+   ============================================================ */
 @media (max-width: 380px) {
-  .subjects {
-    gap: 6px;
-  }
-  .subject {
-    padding: 12px 8px;
-  }
+  .hero__title { font-size: 24px; }
+  .bento__title { font-size: 14px; }
+  .bento__num { font-size: 36px; }
+
+  .marquee__track { font-size: 14px; gap: 14px; animation-duration: 22s; }
+
+  .subjects { gap: 6px; }
+  .subject { padding: 12px 8px; }
   .subject h3 { font-size: 11px; }
   .subject__desc { font-size: 10px; }
   .subject__hint { font-size: 8px; }
-  .subject__icon {
-    width: 26px;
-    height: 26px;
-    font-size: 12px;
-  }
+  .subject__icon { width: 26px; height: 26px; font-size: 12px; }
+
+  .teacher h3 { font-size: 13px; }
+  .teacher p { font-size: 10.5px; }
+  .project__steps h4 { font-size: 13px; }
+  .project__steps p { font-size: 10.5px; }
 }

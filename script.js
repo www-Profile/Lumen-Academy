@@ -1,4 +1,6 @@
-// мобильное меню
+// ============================================================
+// МОБИЛЬНОЕ МЕНЮ
+// ============================================================
 const burger = document.querySelector('.burger');
 const nav = document.querySelector('.nav');
 if (burger && nav) {
@@ -14,7 +16,9 @@ if (burger && nav) {
   );
 }
 
-// ===== ФОРМА + МОДАЛКА =====
+// ============================================================
+// ФОРМА + МОДАЛКА «ЗАЯВКА ОТПРАВЛЕНА»
+// ============================================================
 const form = document.getElementById('leadForm');
 const modal = document.getElementById('modal');
 
@@ -24,7 +28,6 @@ if (form && modal) {
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
-
   function closeModal() {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
@@ -44,11 +47,14 @@ if (form && modal) {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     form.reset();
+    syncFormSubjectSelect(); // очистить визуальный блок выбранных
     openModal();
   });
 }
 
-// ============ ПОДГОНКА ЛОГОТИПА ============
+// ============================================================
+// ПОДГОНКА ЛОГОТИПА (LUMEN по ширине ACADEMY)
+// ============================================================
 function fitLogo() {
   document.querySelectorAll('.logo').forEach(logo => {
     const main = logo.querySelector('.logo__main');
@@ -68,7 +74,6 @@ function fitLogo() {
     sub.style.fontSize = (baseSize * (wMain / wSub)) + 'px';
   });
 }
-
 fitLogo();
 window.addEventListener('resize', fitLogo);
 window.addEventListener('load', fitLogo);
@@ -76,22 +81,23 @@ if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(fitLogo);
 }
 
-// ===== FAQ — плавное открытие + клик по всему блоку =====
+// ============================================================
+// FAQ — плавное открытие + клик по всему блоку
+// ============================================================
 document.querySelectorAll('.faq details').forEach(details => {
   const summary = details.querySelector('summary');
   const content = details.querySelector('.faq__content');
   if (!summary || !content) return;
 
-const isMobile = window.innerWidth <= 720;
-if (details.hasAttribute('open')) {
+  const isMobile = window.innerWidth <= 720;
+  if (details.hasAttribute('open')) {
     if (isMobile) {
-        // На телефоне принудительно закрываем первый открытый вопрос
-        details.removeAttribute('open');
-        content.style.height = '0';
+      details.removeAttribute('open');
+      content.style.height = '0';
     } else {
-        content.style.height = 'auto';
+      content.style.height = 'auto';
     }
-}
+  }
 
   function toggle() {
     if (details.dataset.animating === '1') return;
@@ -146,18 +152,18 @@ if (details.hasAttribute('open')) {
   });
 });
 
-// ===== МОДАЛКА ПРЕДМЕТОВ =====
+// ============================================================
+// МОДАЛКА ПРЕДМЕТОВ
+// ============================================================
 const subjectModal = document.getElementById('subjectModal');
 const subjectModalTitle = document.getElementById('subjectModalTitle');
 const subjectModalText = document.getElementById('subjectModalText');
 const subjectModalIcon = document.getElementById('subjectModalIcon');
 const subjectModalBtn = document.getElementById('subjectModalBtn');
 
-// ===== ВЫБОР ПРЕДМЕТА + МОДАЛКА =====
 const selectedSubjects = new Set();
 let currentSubjectCard = null;
 
-// надпись на кнопке в модалке
 function updateModalButton(card) {
   if (!subjectModalBtn || !card) return;
   const name = card.dataset.subject;
@@ -209,7 +215,6 @@ if (subjectModal) {
   if (subjectModalBtn) {
     subjectModalBtn.addEventListener('click', () => {
       if (!currentSubjectCard) return;
-
       const name = currentSubjectCard.dataset.subject;
 
       if (selectedSubjects.has(name)) {
@@ -226,9 +231,10 @@ if (subjectModal) {
   }
 }
 
-// ===== ОБНОВЛЕНИЕ БЛОКА ВЫБРАННЫХ ПРЕДМЕТОВ В ФОРМЕ =====
+// ============================================================
+// БЛОК ВЫБРАННЫХ ПРЕДМЕТОВ В ФОРМЕ
+// ============================================================
 const formSubjectInput = document.getElementById('formSubjectInput');
-// ===== ССЫЛКА НА БЛОК ВЫБРАННЫХ ПРЕДМЕТОВ =====
 const formSubjects = document.getElementById('formSubjects');
 
 function syncFormSubjectSelect() {
@@ -255,7 +261,7 @@ function syncFormSubjectSelect() {
   formSubjectInput.value = [...selectedSubjects].join(', ');
 }
 
-// ===== КЛИК ПО БЛОКУ В ФОРМЕ → СКРОЛЛ К ПРЕДМЕТАМ =====
+// Клик по блоку в форме → скролл к секции «Предметы»
 if (formSubjects) {
   formSubjects.addEventListener('click', () => {
     const subjectsSection = document.getElementById('subjects');
@@ -279,100 +285,78 @@ if (formSubjects) {
 }
 
 // ============================================================
-// МОБИЛЬНАЯ ВЕРСИЯ
+// МОБИЛЬНАЯ ВЕРСИЯ — упрощения под ≤720px
+// (визуальное скрытие фото делает CSS на ≤960px)
 // ============================================================
 function applyMobileVersion() {
   const isMobile = window.innerWidth <= 720;
-
-  // если не мобилка — выходим (на всякий случай откатывать не нужно)
   if (!isMobile) return;
 
-  // помечаем body — CSS будет опираться на этот класс
   document.body.classList.add('is-mobile');
 
-  // ---------- 1. HEADER — оставляем только лого + бургер ----------
+  // 1. HEADER — скрыть кнопку «Записаться»
   const headerBtn = document.querySelector('.header .btn');
   if (headerBtn) headerBtn.style.display = 'none';
 
-  // ---------- 2. BENTO ----------
-
-  // 2.1 Меняем метку «Онлайн · 14–20 лет · Живые уроки…» на «Lumen Academy»
+  // 2. BENTO — короткие тексты
   const bigLabel = document.querySelector('.bento__item--big .bento__label');
   if (bigLabel) bigLabel.textContent = 'Lumen Academy';
 
-  // 2.2 Короткий текст в большой карточке
   const bigLead = document.querySelector('.bento__item--big .bento__lead');
   if (bigLead) {
-bigLead.innerHTML = `
-  Онлайн-школа индивидуальных занятий. Готовим к ОГЭ и ЕГЭ,
-  помогаем с поступлением и учебными проектами.
-  Все уроки — один на один с преподавателем.
-`;
+    bigLead.innerHTML = `
+      Онлайн-школа индивидуальных занятий. Готовим к ОГЭ и ЕГЭ,
+      помогаем с поступлением и учебными проектами.
+      Все уроки — один на один с преподавателем.
+    `;
   }
 
-// 2.3 Короткие описания в bento-карточках
-document.querySelectorAll('.bento__item').forEach(item => {
-  if (item.classList.contains('bento__item--big')) return;
-  if (item.classList.contains('bento__photo')) return;
+  document.querySelectorAll('.bento__item').forEach(item => {
+    if (item.classList.contains('bento__item--big')) return;
+    if (item.classList.contains('bento__photo')) return;
 
-  const desc = item.querySelector('.bento__desc');
-  if (!desc) return;
+    const desc = item.querySelector('.bento__desc');
+    if (!desc) return;
 
-if (item.classList.contains('bento__item--accent')) {
-  desc.textContent = 'Помогаем с индивидуальными проектами, курсовыми и научными работами.';
-} else {
-    const label = item.querySelector('.bento__label');
-    const key = label ? label.textContent.trim() : '';
+    if (item.classList.contains('bento__item--accent')) {
+      desc.textContent = 'Помогаем с индивидуальными проектами, курсовыми и научными работами.';
+    } else {
+      const label = item.querySelector('.bento__label');
+      const key = label ? label.textContent.trim() : '';
 
-    const map = {
-      'Формат': 'Живые уроки один на один, не записи. Расписание под ученика.',
-      'Старт':  'Начать можно в любой день. Программа подстраивается под уровень.'
-    };
+      const map = {
+        'Формат': 'Живые уроки один на один, не записи. Расписание под ученика.',
+        'Старт':  'Начать можно в любой день. Программа подстраивается под уровень.'
+      };
 
-    if (map[key]) desc.textContent = map[key];
+      if (map[key]) desc.textContent = map[key];
+    }
+  });
+
+  // 3. CTA — короткий текст
+  const ctaLead = document.querySelector('.cta__lead');
+  if (ctaLead) {
+    ctaLead.textContent = 'Оставьте заявку — преподаватель свяжется с вами в ближайшее время. Обсудим цель, уровень и подберём программу.';
   }
-});
 
-  // 2.4 Удаляем фото-блок в bento
-  const bentoPhoto = document.querySelector('.bento__photo');
-  if (bentoPhoto) bentoPhoto.remove();
-
-  // ---------- 4. FAQ — удаляем фото ----------
-  const faqPhoto = document.querySelector('.faq__photo');
-  if (faqPhoto) faqPhoto.remove();
-
-  // ---------- CTA — короткий текст для телефона ----------
-const ctaLead = document.querySelector('.cta__lead');
-if (ctaLead) {
-  ctaLead.textContent = 'Оставьте заявку — преподаватель свяжется с вами в ближайшее время. Обсудим цель, уровень и подберём программу.';
-}
-
-  // ---------- 5. FOOTER — убираем ссылки ----------
+  // 4. FOOTER — убрать ссылки
   const footerLinks = document.querySelector('.footer__links');
   if (footerLinks) footerLinks.remove();
 
-  // ---------- 6. Модалка предмета — сокращаем ----------
-  // (размер регулируется в CSS, тут только текст если нужно)
+  // 5. PROJECT — кнопка после списка шагов, на всю ширину
+  const projectText = document.querySelector('.project__text');
+  const projectSteps = document.querySelector('.project__steps');
+  const projectBtn = projectText ? projectText.querySelector('.btn--project') : null;
 
-  // ---------- 7. PROJECT — кнопка после 4 пунктов, на всю ширину ----------
-const projectText = document.querySelector('.project__text');
-const projectSteps = document.querySelector('.project__steps');
-const projectBtn = projectText ? projectText.querySelector('.btn--project') : null;
-
-if (projectText && projectSteps && projectBtn) {
-  // вынимаем кнопку из левой колонки и вставляем после списка
-  projectSteps.insertAdjacentElement('afterend', projectBtn);
-
-  // растягиваем на всю ширину
-  projectBtn.classList.add('btn--project-full');
-}
+  if (projectText && projectSteps && projectBtn) {
+    projectSteps.insertAdjacentElement('afterend', projectBtn);
+    projectBtn.classList.add('btn--project-full');
+  }
 }
 
-// запускаем при загрузке
 applyMobileVersion();
 
-// если пользователь меняет размер окна — перезагружаем страницу,
-// чтобы откатить или применить мобильную версию заново
+// Перезагрузка при переходе через границу 720px — чтобы откатить JS-упрощения
 let lastMobile = window.innerWidth <= 720;
 window.addEventListener('resize', () => {
   const nowMobile = window.innerWidth <= 720;
@@ -381,7 +365,9 @@ window.addEventListener('resize', () => {
   }
 });
 
-// ===== MARQUEE — дублируем набор для бесшовной прокрутки =====
+// ============================================================
+// MARQUEE — дублирование контента для бесшовной прокрутки
+// ============================================================
 (function initMarquee() {
   const track = document.querySelector('.marquee__track');
   if (!track) return;
