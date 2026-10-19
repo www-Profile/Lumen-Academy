@@ -363,30 +363,66 @@ em { font-style: normal; color: var(--tomato); }
   display: block;
 }
 
-/* ===== MARQUEE ===== */
+/* ===== MARQUEE — бесконечная лента ===== */
 .marquee {
   overflow: hidden;
   border-top: 1px solid var(--gray);
   border-bottom: 1px solid var(--gray);
-  padding: 10px 0;
+  padding: 14px 0;
   background: var(--white);
-  margin: 56px 0 0;
+  position: relative;
+
+  /* Плавное затухание по краям */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
 }
+
 .marquee__track {
   display: flex;
   gap: 32px;
   white-space: nowrap;
-  animation: scroll 40s linear infinite;
+  width: max-content;
+  animation: marqueeScroll 40s linear infinite;
   font-family: 'Unbounded', sans-serif;
   font-weight: 600;
   font-size: 26px;
   letter-spacing: -0.02em;
+  will-change: transform;
 }
-.marquee__track span:nth-child(even) { color: var(--tomato); }
 
-@keyframes scroll {
+/* Каждый нечётный span — точка-разделитель */
+.marquee__track span:nth-child(even) {
+  color: var(--tomato);
+  opacity: 0.85;
+}
+
+/* Ключевой трюк: дубликат набора создаётся через ::before/::after псевдоэлементы */
+.marquee__track::before,
+.marquee__track::after {
+  content: '';
+  display: none;
+}
+
+/* Пауза при ховере (опционально, приятный UX) */
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeScroll {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to   { transform: translateX(-50%); }
 }
 
 /* ===== SECTION ===== */
@@ -1022,6 +1058,12 @@ z-index: 1;
   :root { --pad: clamp(20px, 3.2vw, 56px); }
 
   .hero__title { font-size: clamp(36px, 5vw, 80px); }
+  .bento__label {
+    left: 14px;
+    padding: 4px 16px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
 
   .bento { gap: 14px; }
   .subjects { gap: 14px; }
@@ -1049,6 +1091,12 @@ z-index: 1;
   .bento__item--big {
     grid-column: span 2;
     grid-row: span 2;
+  }
+  .bento__label {
+    left: 14px;
+    padding: 3px 14px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
   }
   .bento__item--accent { grid-column: span 2; }
   .bento__photo { display: none; }
@@ -1117,6 +1165,12 @@ z-index: 1;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     grid-auto-rows: minmax(160px, auto);
+  }
+    .bento__label {
+    left: 14px;
+    padding: 3px 14px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
   }
   .bento__item--big { grid-column: span 2; grid-row: span 1; }
   .bento__item--accent { grid-column: span 2; }
@@ -1205,7 +1259,7 @@ z-index: 1;
   }
   .bento__label {
     left: 14px;
-    padding: 4px 14px;
+    padding: 1px 10px;
     font-size: 9px;
     letter-spacing: 0.12em;
   }
@@ -1218,7 +1272,7 @@ z-index: 1;
   }
 
   /* Marquee */
-  .marquee { margin-top: 32px; padding: 8px 0; }
+  .marquee { padding: 8px 0; }
   .marquee__track { font-size: 16px; gap: 18px; animation-duration: 30s; }
 
   /* Subjects — по 2 в ряд */
@@ -1426,4 +1480,21 @@ z-index: 1;
   .teacher p { font-size: 10.5px; }
   .project__steps h4 { font-size: 13px; }
   .project__steps p { font-size: 10.5px; }
+}
+
+/* Планшеты */
+@media (max-width: 968px) {
+  .marquee { padding: 12px 0;}
+  .marquee__track { font-size: 20px; gap: 24px; animation-duration: 32s; }
+}
+
+/* Телефоны */
+@media (max-width: 720px) {
+  .marquee { padding: 10px 0;}
+  .marquee__track { font-size: 16px; gap: 18px; animation-duration: 26s; }
+}
+
+/* Очень узкие телефоны */
+@media (max-width: 380px) {
+  .marquee__track { font-size: 14px; gap: 14px; animation-duration: 22s; }
 }

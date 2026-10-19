@@ -337,10 +337,6 @@ if (item.classList.contains('bento__item--accent')) {
   const bentoPhoto = document.querySelector('.bento__photo');
   if (bentoPhoto) bentoPhoto.remove();
 
-  // ---------- 3. Удаляем MARQUEE ----------
-  const marquee = document.querySelector('.marquee');
-  if (marquee) marquee.remove();
-
   // ---------- 4. FAQ — удаляем фото ----------
   const faqPhoto = document.querySelector('.faq__photo');
   if (faqPhoto) faqPhoto.remove();
@@ -384,3 +380,10 @@ window.addEventListener('resize', () => {
     location.reload();
   }
 });
+
+// ===== MARQUEE — дублируем набор для бесшовной прокрутки =====
+(function initMarquee() {
+  const track = document.querySelector('.marquee__track');
+  if (!track) return;
+  track.innerHTML += track.innerHTML;
+})();
